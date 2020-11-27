@@ -33,14 +33,13 @@ const App = () => {
       const dbPediaQuery = getCountryFromDbpedia(value);
       const dbPediaQueryResult = await queryToDbpedia(dbPediaQuery);
       const dbPediaResult = parseDbpediaToData(dbPediaQueryResult.results.bindings);
-      console.log(dbPediaResult);
       results.push(...dbPediaResult);
     }
 
     if (type === "1" || type === "2") {
       const localGraphQuery = getCountryFromLocalGraph(value);
-      const localGraphResult = parseLocalToData(await queryToLocalGraph(localGraph, localGraphQuery));
-      console.log(localGraphResult);
+      const localGraphQueryResult = await queryToLocalGraph(localGraph, localGraphQuery);
+      const localGraphResult = parseLocalToData(localGraphQueryResult);
       results.push(...localGraphResult);
     }
 

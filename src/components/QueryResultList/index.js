@@ -25,9 +25,9 @@ const QueryResultList = ({ data, onSelect }) => (
 
     {data.map((result, index) => (
       <Result key={index} onClick={() => onSelect(index)}>
-        Source: {result["source"]}
+        {index}. Source: {result["source"]}
         <br/>
-        Name: {result["name"]}
+        Data: {JSON.stringify(result)}
       </Result>
     ))}
   </Layout>

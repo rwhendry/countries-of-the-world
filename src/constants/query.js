@@ -2,7 +2,7 @@ export const getCountryFromDbpedia = (value) => (`
   PREFIX dbo: <http://dbpedia.org/ontology/>
   PREFIX dbr: <http://dbpedia.org/resource/>
 
-  SELECT DISTINCT ?name ?population ?area ?gdp ?capital ?currency
+  SELECT DISTINCT ?name (MAX(?population) as ?population) (MAX(?area) as ?area) (MAX(?gdp) as ?gdp) ?capital ?currency
   WHERE {
     ?country a dbo:Country ;
              rdfs:label ?name ;
@@ -13,14 +13,11 @@ export const getCountryFromDbpedia = (value) => (`
              dbo:currency ?currencyObject .
     ?capitalObject foaf:name ?capital .
     ?currencyObject foaf:name ?currency .
-             
-             
 
     FILTER (LANG(?name)="en")
     FILTER (REGEX(str(?name), "${value}", "i"))
     FILTER NOT EXISTS { ?country dbo:dissolutionYear ?yearEnd }
   }
-  GROUP BY ?country
   LIMIT 10
 `);
 

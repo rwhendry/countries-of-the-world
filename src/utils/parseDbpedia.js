@@ -5,7 +5,6 @@ const parseDbpediaToData = ((value) => {
     };
 
     Object.keys(data).map((key) => {
-      console.log(data[key]);
       currentData[key] = data[key]["value"];
     });
 
