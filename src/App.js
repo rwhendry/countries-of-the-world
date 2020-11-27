@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState} from "react";
 
 import {
   getCountryFromDbpedia,
-  getCountryFromLocalGraph,
+  tes,
 } from "constants/query";
 import queryToDbpedia from "utils/queryToDbpedia";
-import queryToLocalGraph from "utils/queryToLocalGraph";
+// import queryToLocalGraph from "utils/queryToLocalGraph";
 import parseDbpediaToData from "utils/parseDbpedia";
-import createStore, {parseLocalCSV, parseLocalToData } from "utils/parseLocalCsvWithRdfstore";
+import createStore, {executeQuery, parseLocalCSV, parseLocalToData } from "utils/parseLocalCsvWithRdfstore";
 import Container from "components/Container";
 // import {huehuehue} from "utils/parseLocalCsvWithRdfstore";
 
@@ -22,8 +22,8 @@ const App = () => {
 
   useEffect(async () => {
     setIsLoading(true);
-    await parseLocalCSV(localGraph);
-    setLocalGraph(localGraph);
+    var graph = await parseLocalCSV(localGraph);
+    setLocalGraph(graph);
     setIsLoading(false);
   }, []);
 
@@ -39,8 +39,8 @@ const App = () => {
     }
 
     if (type === "1" || type === "2") {
-      const localGraphQuery = getCountryFromLocalGraph(value);
-      const localGraphResult = parseLocalToData(await queryToLocalGraph(localGraph, localGraphQuery));
+      const localGraphQuery = tes(value);
+      const localGraphResult = parseLocalToData(await executeQuery(localGraph, localGraphQuery));
       console.log(localGraphResult);
       results.push(...localGraphResult);
     }
