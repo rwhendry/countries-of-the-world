@@ -7,15 +7,16 @@ import {
 import queryToDbpedia from "utils/queryToDbpedia";
 import queryToLocalGraph from "utils/queryToLocalGraph";
 import parseDbpediaToData from "utils/parseDbpedia";
-import parseLocalCSV, { parseLocalToData } from "utils/parseLocalCsv";
+import createStore, {parseLocalCSV, parseLocalToData } from "utils/parseLocalCsvWithRdfstore";
 import Container from "components/Container";
+// import {huehuehue} from "utils/parseLocalCsvWithRdfstore";
 
 // eslint-disable-next-line no-undef
-const $rdf = require("rdflib");
+// const $rdf = require("rdflib");
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [localGraph, setLocalGraph] = useState($rdf.graph());
+  const [localGraph, setLocalGraph] = useState(createStore());
   const [queryResult, setQueryResult] = useState([]);
   const [selectedResult, setSelectedResult] = useState({});
 

@@ -13,8 +13,8 @@ export const getCountryFromDbpedia = (value) => (`
              dbo:currency ?currencyObject .
     ?capitalObject foaf:name ?capital .
     ?currencyObject foaf:name ?currency .
-             
-             
+
+
 
     FILTER (LANG(?name)="en")
     FILTER (REGEX(str(?name), "${value}", "i"))
@@ -28,10 +28,18 @@ export const getCountryFromDbpedia = (value) => (`
 export const getCountryFromLocalGraph = (value) => (`
   PREFIX SAM: <http://www.samkok.cn/resource/>
 
-  SELECT ?name 
+  SELECT ?name
   WHERE {
     ?country SAM:name ?name .
-            
+
     FILTER (REGEXP("${value}", ?country))
+  }
+`);
+
+export const tes = (value) => (`
+  SELECT ?s ?p ?o
+  WHERE {
+    ?s ?p ?o .
+    FILTER(REGEX(STR(?o), "${value}", "i"))
   }
 `);
