@@ -21,7 +21,7 @@ const Result = styled.div`
 
 const QueryResultList = ({ data, onSelect }) => (
   <Layout>
-    Your query matches:
+    {data.length} data matches your query:
 
     {data.map((result, index) => (
       <Result key={index} onClick={() => onSelect(index)}>

@@ -11,6 +11,7 @@
     "pandas-js": "^0.2.4",
     "papaparse": "^5.3.0",
     "rdflib": "^2.1.1",
+    "rdfstore": "^0.9.17",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.11.2",

@@ -21,14 +21,9 @@ export const getCountryFromDbpedia = (value) => (`
   LIMIT 10
 `);
 
-// CANNOT FILTER BY REGEX OR STR CONTAINS
-export const getCountryFromLocalGraph = (value) => (`
-  PREFIX SAM: <http://www.samkok.cn/resource/>
-
-  SELECT ?name 
+export const getCountryFromLocalStore = (value) => (`
+  SELECT ?name
   WHERE {
-    ?country SAM:name ?name .
-            
-    FILTER (REGEXP("${value}", ?country))
+    ?country SAM:name "${value}" .
   }
 `);
