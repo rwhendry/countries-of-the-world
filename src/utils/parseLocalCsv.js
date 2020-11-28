@@ -12,7 +12,7 @@ const addLiteralTriple = (subj, pred, obj) => {
 
 export const addDataToStore = (store, df) => {
   let query = "INSERT DATA { ";
-  
+
   for(const [row] of df.iterrows()) {
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "name", row.get("Country"), "string");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "inRegion", row.get("Region"), "string");
@@ -55,16 +55,17 @@ const parseLocalCSV = async() => {
   return resultDF;
 };
 
-function createStore(callback) {
+async function createStore(localStore) {
   rdfstore.create(async function(err, store) {
-    if (err) {    
+    if (err) {
       console.log("[rdfstore.create] Error creating store: " + err);
     } else {
+      console.log("[rdfstore.create] Creating store success");
       store.registerDefaultProfileNamespaces();
       store.registerDefaultNamespace("sam", "http://www.samkok.cn/resource/");
       const df = await parseLocalCSV();
-      await addDataToStore(store, df);
-      callback(store);
+      addDataToStore(store, df);
+      localStore.obj = store;
     }
   });
 }
