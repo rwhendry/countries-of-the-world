@@ -24,7 +24,7 @@ const InfoCard = ({ data, onToggle, isMobile }) => (
       </div>
     )}
     {Object.keys(data).map((key, index) => (
-      <div key={index}>{key}: {data[key]}</div>
+      <div key={index}>{key}: {JSON.stringify(data[key])}</div>
     ))}
   </Layout>
 );

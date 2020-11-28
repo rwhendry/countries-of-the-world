@@ -3,6 +3,7 @@ export default function queryToLocalStore(store, query, callback) {
     if (err) {
       console.log("[query] Error querying: " + err);
     } else {
+      console.log(results);
       callback(results);
     }
   });

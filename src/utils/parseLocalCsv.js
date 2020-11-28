@@ -34,7 +34,6 @@ export const addDataToStore = (store, df) => {
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "agriculture", row.get("Agriculture"), "double");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "industry", row.get("Industry"), "double");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "service", row.get("Service"), "double");
-    break;
   }
 
   query += "}";
@@ -56,16 +55,16 @@ const parseLocalCSV = async() => {
   return resultDF;
 };
 
-function createStore() {
-  return rdfstore.create(async function(err, store) {
+function createStore(callback) {
+  rdfstore.create(async function(err, store) {
     if (err) {    
       console.log("[rdfstore.create] Error creating store: " + err);
     } else {
       store.registerDefaultProfileNamespaces();
       store.registerDefaultNamespace("sam", "http://www.samkok.cn/resource/");
-      
       const df = await parseLocalCSV();
       await addDataToStore(store, df);
+      callback(store);
     }
   });
 }

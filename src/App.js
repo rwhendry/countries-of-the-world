@@ -16,11 +16,10 @@ const App = () => {
   const [queryResult, setQueryResult] = useState([]);
   const [selectedResult, setSelectedResult] = useState({});
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(true);
-    const store = await createStore();
-    console.log(store);
-    setLocalStore(store);
+    // ini suka null store nya somehow
+    createStore((store) => setLocalStore(store));
     setIsLoading(false);
   }, []);
 
@@ -36,9 +35,15 @@ const App = () => {
 
     if (type === "1" || type === "2") {
       let localStoreQueryResult;
+      // ini gatau lagi gw cara bawa value dari queryToLocalStore ke sini
       const getLocalStoreResult = (result) => { localStoreQueryResult = result;};
-      const localStoreQuery = getCountryFromLocalStore();
+
+      const localStoreQuery = getCountryFromLocalStore(value);
+      console.log(localStore);
       await queryToLocalStore(localStore, localStoreQuery, getLocalStoreResult);
+      // console log di dalem queryToLocalStore mau, tapi somehow update ke local var ini nya gamau
+      // kalo di run, pertama kali pasti error.. terus nambah console log sesuatu, save, jadi kererender, baru deh mau. tapi masi error jg
+      console.log(localStoreQueryResult);
       const localStoreResult = parseLocalToData(localStoreQueryResult);
       results = [...results, ...localStoreResult];
     }
