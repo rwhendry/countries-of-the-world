@@ -15,6 +15,12 @@ const App = () => {
   const [localStore, setLocalStore] = useState(null);
   const [queryResult, setQueryResult] = useState([]);
   const [selectedResult, setSelectedResult] = useState({});
+  const [tempData, setTempData] = useState([]);
+
+  const getLocalStoreResult = useCallback((result) => {
+    console.log(result);
+    setTempData([...tempData, ...parseLocalToData(result)]);
+  }, []);
 
   useEffect(async () => {
     setIsLoading(true);
@@ -24,22 +30,19 @@ const App = () => {
   }, []);
 
   const onSearch = useCallback(async (value, type) => {
-    let results = [];
     if (type === "0" || type === "2") {
       const dbPediaQuery = getCountryFromDbpedia(value);
       const dbPediaQueryResult = await queryToDbpedia(dbPediaQuery);
       const dbPediaResult = parseDbpediaToData(dbPediaQueryResult.results.bindings);
-      results.push(...dbPediaResult);
+      setTempData([...tempData, dbPediaResult]);
     }
 
     if (type === "1" || type === "2") {
-      const localStoreQuery = getCountryFromLocalStore(value);
-      const localStoreQueryResult = await queryToLocalStore(localStore, localStoreQuery);
-      const localStoreResult = parseLocalToData(localStoreQueryResult);
-      results.push(...localStoreResult);
+      const localStoreQuery = getCountryFromLocalStore();
+      await queryToLocalStore(localStore, localStoreQuery, getLocalStoreResult);
     }
 
-    setQueryResult(results);
+    setQueryResult(tempData);
     setSelectedResult({});
   }, []);
 

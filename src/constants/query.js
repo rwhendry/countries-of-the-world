@@ -21,9 +21,11 @@ export const getCountryFromDbpedia = (value) => (`
   LIMIT 10
 `);
 
-export const getCountryFromLocalStore = (value) => (`
+export const getCountryFromLocalStore = () => (`
+  PREFIX SAM: <http://www.samkok.cn/resource/>
+
   SELECT ?name
   WHERE {
-    ?country SAM:name "${value}" .
+    ?country SAM:name ?name .
   }
 `);
