@@ -54,7 +54,7 @@ const Container = ({ onSearch, searchValue="", queryResult=[], selectedResult={}
   let resultComponent;
   if (!searchValue) {
     resultComponent = (
-      <ResultLayout style={{ alignItems: "center", fontSize: "1.25em", marginTop: "-4em", color: "grey"}}>
+      <ResultLayout style={{ alignItems: "center", fontSize: "1.25em", paddingBottom: "4em", color: "grey"}}>
         Start searching to explore the world
       </ResultLayout>
     );
@@ -81,6 +81,7 @@ const Container = ({ onSearch, searchValue="", queryResult=[], selectedResult={}
         </ResultLayout>
       );
     }
+
   }
 
   return (
