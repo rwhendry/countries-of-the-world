@@ -23,20 +23,25 @@ const ResultLayout = styled.div`
   word-wrap: break-word;
 `;
 
-const QueryResultList = ({ data, searchValue, onSelect }) => (
-  <Layout>
-    { searchValue && (<p>Showing results for <b>{searchValue}</b></p>) }
-    {data.length} {data.length > 1 ? "entries" : "entry"} match your query:
+const QueryResultList = ({ data, searchValue="", onSelect }) => {
+  if (!searchValue) {
+    return <Layout />;
+  }
+  return (
+    <Layout>
+      <p>Showing results for <b>{searchValue}</b></p>
+      {data.length} {data.length > 1 ? "entries" : "entry"} match your query:
 
-    {data.map((result, index) => (
-      <ResultLayout key={index} onClick={() => onSelect(index)}>
-        {index+1}. Source: {result["source"]}
-        <br/>
-        Data: {JSON.stringify(result)}
-      </ResultLayout>
-    ))}
-  </Layout>
-);
+      {data.map((result, index) => (
+        <ResultLayout key={index} onClick={() => onSelect(index)}>
+          {index+1}. Source: {result["source"]}
+          <br/>
+          Data: {JSON.stringify(result)}
+        </ResultLayout>
+      ))}
+    </Layout>
+  );
+};
 
 QueryResultList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()),

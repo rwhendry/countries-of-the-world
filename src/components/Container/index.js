@@ -25,6 +25,7 @@ const ResultLayout = styled.div`
   flex-direction: row;
   width: 100%;
   justify-content: center;
+  flex-grow: 1;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     justify-content: center;
@@ -51,27 +52,35 @@ const Container = ({ onSearch, searchValue="", queryResult=[], selectedResult={}
   const isMobile = width <= MOBILE_BREAK_POINT;
 
   let resultComponent;
-  if (isMobile) {
-    if (mobileIsShowingInfoCard) {
-      resultComponent = (
-        <ResultLayout>
-          <InfoCard data={selectedResult} isMobile={isMobile} onToggle={() => setMobileIsShowingInfoCard(false)}/>
-        </ResultLayout>
-      );
+  if (!searchValue) {
+    resultComponent = (
+      <ResultLayout style={{ alignItems: "center", fontSize: "1.25em", marginTop: "-4em", color: "grey"}}>
+        Start searching to explore the world
+      </ResultLayout>
+    );
+  } else {
+    if (isMobile) {
+      if (mobileIsShowingInfoCard) {
+        resultComponent = (
+          <ResultLayout>
+            <InfoCard data={selectedResult} isMobile={isMobile} onToggle={() => setMobileIsShowingInfoCard(false)}/>
+          </ResultLayout>
+        );
+      } else {
+        resultComponent = (
+          <ResultLayout>
+            <QueryResultList searchValue={searchValue} data={queryResult} onSelect={selectResult} />
+          </ResultLayout>
+        );
+      }
     } else {
       resultComponent = (
         <ResultLayout>
           <QueryResultList searchValue={searchValue} data={queryResult} onSelect={selectResult} />
+          <InfoCard data={selectedResult} />
         </ResultLayout>
       );
     }
-  } else {
-    resultComponent = (
-      <ResultLayout>
-        <QueryResultList searchValue={searchValue} data={queryResult} onSelect={selectResult} />
-        <InfoCard data={selectedResult} />
-      </ResultLayout>
-    );
   }
 
   return (
