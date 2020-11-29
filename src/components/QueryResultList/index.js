@@ -5,7 +5,7 @@ import { MOBILE_BREAK_POINT } from "constants/mobileBreakPoint";
 
 const Layout = styled.div`
   width: 45%;
-  border: 1px solid grey;
+  border: 1px solid lightgray;
   border-radius: 1em;
   padding: 2em;
   margin: 2em;
@@ -19,16 +19,14 @@ const Layout = styled.div`
 
 const ResultLayout = styled.div`
   cursor: pointer;
-  padding: 1em;
-  border: 1px solid grey;
-  border-radius: 1em;
-  margin: 1em 0;
+  margin: 2em 0;
   word-wrap: break-word;
 `;
 
-const QueryResultList = ({ data, onSelect }) => (
+const QueryResultList = ({ data, searchValue, onSelect }) => (
   <Layout>
-    {data.length} data matches your query:
+    { searchValue && (<p>Showing results for <b>{searchValue}</b></p>) }
+    {data.length} {data.length > 1 ? "entries" : "entry"} match your query:
 
     {data.map((result, index) => (
       <ResultLayout key={index} onClick={() => onSelect(index)}>
@@ -42,6 +40,7 @@ const QueryResultList = ({ data, onSelect }) => (
 
 QueryResultList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()),
+  searchValue: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
 };
 

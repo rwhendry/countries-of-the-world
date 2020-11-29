@@ -8,12 +8,14 @@ const Layout = styled.div`
   width: 30%;
   height: 100%;
   display: inline-block;
-  border: 1px solid grey;
+  border: 1px solid lightgray;
   border-radius: 1em;
   padding: 2em;
   margin-top: 2em;
   margin-right: 2em;
   word-wrap: break-word;
+  position: sticky;
+  top: 4em;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     width: 80vw;

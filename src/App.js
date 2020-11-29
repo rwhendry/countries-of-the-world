@@ -9,11 +9,13 @@ import queryToLocalStore from "utils/queryToLocalStore";
 import { parseDbpediaToData, parseLocalToData } from "utils/parseQueryData";
 import createStore from "utils/parseLocalCsv";
 import Container from "components/Container";
+import Wrapper from "components/Container/Wrapper";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [localStore] = useState({"obj": null});
   const [queryResult, setQueryResult] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [selectedResult, setSelectedResult] = useState({});
 
   useEffect(() => {
@@ -23,6 +25,8 @@ const App = () => {
   }, []);
 
   const onSearch = useCallback(async (value, type) => {
+    setIsLoading(true);
+    setSearchValue(value);
     let results = [];
 
     if (type === "0" || type === "2") {
@@ -45,16 +49,20 @@ const App = () => {
 
     setQueryResult(results);
     setSelectedResult({});
+    setIsLoading(false);
   }, []);
 
   return (
-    <Container
-      onSearch={onSearch}
-      selectedResult={selectedResult}
-      queryResult={queryResult}
-      onResultSelect={(index) => setSelectedResult(queryResult[index])}
-      isLoading={isLoading}
-    />
+    <Wrapper>
+      <Container
+        onSearch={onSearch}
+        searchValue={searchValue}
+        selectedResult={selectedResult}
+        queryResult={queryResult}
+        onResultSelect={(index) => setSelectedResult(queryResult[index])}
+        isLoading={isLoading}
+      />
+    </Wrapper>
   );
 };
 
