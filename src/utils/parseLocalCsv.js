@@ -63,6 +63,7 @@ async function createStore(localStore) {
       console.log("[rdfstore.create] Creating store success");
       store.registerDefaultProfileNamespaces();
       store.registerDefaultNamespace("sam", "http://www.samkok.cn/resource/");
+  
       const df = await parseLocalCSV();
       addDataToStore(store, df);
       localStore.obj = store;
