@@ -40,7 +40,6 @@ const App = () => {
       };
 
       const localStoreQuery = getCountryFromLocalStore(value);
-      console.log(localStore);
       await queryToLocalStore(localStore.obj, localStoreQuery, setLocalStoreResult);
     }
 

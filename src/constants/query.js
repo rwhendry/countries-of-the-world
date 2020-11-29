@@ -2,19 +2,33 @@ export const getCountryFromDbpedia = (value) => (`
   PREFIX dbo: <http://dbpedia.org/ontology/>
   PREFIX dbr: <http://dbpedia.org/resource/>
 
-  SELECT DISTINCT ?name (MAX(?population) as ?population) (MAX(?area) as ?area) (MAX(?gdp) as ?gdp) ?capital ?currency
+  SELECT DISTINCT
+    ?name
+    ?country
+    (MAX(?foundingDate) as ?foundingDate)
+    (SAMPLE(?leader) as ?leader)
+    (SAMPLE(?capital) as ?capital)
+    (SAMPLE(?currency) as ?currency)
+    ?abstract
   WHERE {
     ?country a dbo:Country ;
              rdfs:label ?name ;
-             dbo:populationTotal ?population ;
-             dbo:areaTotal ?area ;
-             dbp:gdpPppPerCapita ?gdp ;
-             dbo:capital ?capitalObject;
-             dbo:currency ?currencyObject .
+             dbo:capital ?capitalObject ;
+             dbo:abstract ?abstract ;
+             dbo:leader ?leaderObject .
+    
     ?capitalObject foaf:name ?capital .
-    ?currencyObject foaf:name ?currency .
+    ?leaderObject foaf:name ?leader .
+
+    OPTIONAL {
+      ?country dbo:currency ?currencyObject ;
+               dbo:foundingDate ?foundingDate .
+
+      ?currencyObject foaf:name ?currency .
+    }
 
     FILTER (LANG(?name)="en")
+    FILTER (LANG(?abstract)="en")
     FILTER (REGEX(str(?name), "${value}", "i"))
     FILTER NOT EXISTS { ?country dbo:dissolutionYear ?yearEnd }
   }
@@ -24,10 +38,22 @@ export const getCountryFromDbpedia = (value) => (`
 export const getCountryFromLocalStore = value => (`
   PREFIX SAM: <http://www.samkok.cn/resource/>
 
-  SELECT ?name ?region
+  SELECT
+    ?name ?region ?population ?area ?gdp ?birthrate ?deathrate ?agricultureIncomeRatio ?industryIncomeRatio ?serviceIncomeRatio
   WHERE {
     ?country SAM:name ?name ;
-             SAM:inRegion ?region .
-    FILTER (REGEX(str(?name), "${value}", "i"))
+             SAM:inRegion ?region ;
+             SAM:population ?population ;
+             SAM:areaInSquareMile ?area ;
+             SAM:gdpPerCapita ?gdp ;
+             SAM:birthrate ?birthrate ;
+             SAM:deathrate ?deathrate ;
+             SAM:agriculture ?agricultureIncomeRatio ;
+             SAM:industry ?industryIncomeRatio ;
+             SAM:service ?serviceIncomeRatio .
+    FILTER (
+      REGEX(str(?name), "${value}", "i") ||
+      REGEX(str(?region), "${value}", "i")
+    )
   }
 `);

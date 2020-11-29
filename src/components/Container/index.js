@@ -38,7 +38,7 @@ const ResultLayout = styled.div`
 const Container = ({ onSearch, queryResult=[], selectedResult={}, onResultSelect, isLoading }) => {
   const { width } = useWindowSize();
   const [mobileIsShowingInfoCard, setMobileIsShowingInfoCard] = useState(false);
-  const [type, setType] = useState("0");
+  const [type, setType] = useState("2");
 
   if (isLoading) {
     return (
@@ -87,7 +87,7 @@ const Container = ({ onSearch, queryResult=[], selectedResult={}, onResultSelect
         <Select labelId="label" id="select" value={type} style={{ marginTop: "0.5em"}} onChange={(event) => setType(event.target.value)}>
           <MenuItem value="0">DBPedia</MenuItem>
           <MenuItem value="1">Local</MenuItem>
-          <MenuItem value="2">Both</MenuItem>
+          <MenuItem value="2">DBPedia + Local</MenuItem>
         </Select>
         <SearchBar onSubmit={(value) => onSearch(value, type)} />
         {resultComponent}
