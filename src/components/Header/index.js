@@ -9,6 +9,7 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   background-color: lavender;
+  z-index: 999;
 `;
 
 const Header = () => (

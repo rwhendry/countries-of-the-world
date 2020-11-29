@@ -51,6 +51,7 @@ export const getCountryFromLocalStore = value => (`
              SAM:agriculture ?agricultureIncomeRatio ;
              SAM:industry ?industryIncomeRatio ;
              SAM:service ?serviceIncomeRatio .
+
     FILTER (
       REGEX(str(?name), "${value}", "i") ||
       REGEX(str(?region), "${value}", "i")

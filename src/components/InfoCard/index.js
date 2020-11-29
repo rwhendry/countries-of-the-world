@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { MOBILE_BREAK_POINT } from "constants/mobileBreakPoint";
+import Button from "components/Button";
 
 const Layout = styled.div`
   width: 30%;
-  max-width: 30%;
   height: 100%;
   display: inline-block;
   border: 1px solid grey;
@@ -13,19 +14,32 @@ const Layout = styled.div`
   margin-top: 2em;
   margin-right: 2em;
   word-wrap: break-word;
+
+  @media (max-width: ${MOBILE_BREAK_POINT}px) {
+    width: 80vw;
+    border: none;
+    margin-top: 0.5em;
+  }
+`;
+
+const ContentLayout = styled.div`
+  margin: 1em 0;
 `;
 
 const InfoCard = ({ data, onToggle, isMobile }) => (
   <Layout>
     {isMobile && (
       <div>
-        <button onClick={onToggle}>back</button>
-        <br /><br /><br /><br />
+        <Button onClick={onToggle}>
+          Back to results
+        </Button>
       </div>
     )}
-    {Object.keys(data).map((key, index) => (
-      <div key={index}>{key}: {JSON.stringify(data[key])}</div>
-    ))}
+    <ContentLayout>
+      {Object.keys(data).map((key, index) => (
+        <div key={index}>{key}: {JSON.stringify(data[key])}</div>
+      ))}
+    </ContentLayout>
   </Layout>
 );
 

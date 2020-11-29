@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { MOBILE_BREAK_POINT } from "constants/mobileBreakPoint";
+import Button from "components/Button";
 
 const Layout = styled.div`
   padding: 1em;
@@ -10,13 +12,17 @@ const Layout = styled.div`
 `;
 
 const Input = styled.input`
-  // min-width: 40vw;
+  width: 40vw;
   margin: 0 8px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   padding: 0.5em;
+
+  @media (max-width: ${MOBILE_BREAK_POINT}px) {
+    width: 60vw;
+  }
 `;
 
 const SearchBar = props => {
@@ -37,7 +43,7 @@ const SearchBar = props => {
           name="search"
           placeholder="Search"
         />
-        <button onClick={handleSubmit(onSubmit)}>Go</button>
+        <Button onClick={handleSubmit(onSubmit)}>Go</Button>
       </Layout>
     </form>
   );

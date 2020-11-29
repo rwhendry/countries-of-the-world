@@ -9,11 +9,12 @@ const StyledFooter = styled.footer`
   position: sticky;
   bottom: 0;
   background-color: lavender;
+  z-index: 999;
 `;
 
 const Footer = () => (
   <StyledFooter>
-    Copyright of Sam Kok @ 2020
+    Copyright of Sam Kok @ Semantic Web CSUI 2020
   </StyledFooter>
 );
 

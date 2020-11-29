@@ -17,7 +17,6 @@ const ContainerLayout = styled.div`
   align-items: center;
   min-height: 100vh;
   flex-direction: column;
-  justify-content: space-between;
 `;
 
 const ContentLayout = styled.div`
@@ -32,7 +31,12 @@ const ResultLayout = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
+
+  @media (max-width: ${MOBILE_BREAK_POINT}px) {
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Container = ({ onSearch, queryResult=[], selectedResult={}, onResultSelect, isLoading }) => {
