@@ -28,22 +28,40 @@ const ContentLayout = styled.div`
   margin: 1em 0;
 `;
 
-const InfoCard = ({ data, onToggle, isMobile }) => (
-  <Layout>
-    {isMobile && (
-      <div>
-        <Button onClick={onToggle}>
-          Back to results
-        </Button>
-      </div>
-    )}
-    <ContentLayout>
-      {Object.keys(data).map((key, index) => (
-        <div key={index}>{key}: {JSON.stringify(data[key])}</div>
-      ))}
-    </ContentLayout>
-  </Layout>
-);
+const InfoCard = ({ data, onToggle, isMobile }) => {
+  const { additionalInformation } = data;
+
+  return (
+    <Layout>
+      {isMobile && (
+        <div>
+          <Button onClick={onToggle}>
+            Back to results
+          </Button>
+        </div>
+      )}
+      <ContentLayout>
+        {Object.keys(data).map((key, index) => (
+          key !== "additionalInformation" && <div key={index}>{key}: {JSON.stringify(data[key])}</div>
+        ))}
+
+        <br/>
+        <br/>
+
+        {additionalInformation && (
+          <div> Additional Information: {additionalInformation.name} </div>
+        )}
+
+        <br/>
+        <br/>
+        {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
+          <div key={index}>{key}: {JSON.stringify(additionalInformation[key])}</div>))
+        }
+
+      </ContentLayout>
+    </Layout>
+  );
+};
 
 InfoCard.propTypes = {
   data: PropTypes.shape(),

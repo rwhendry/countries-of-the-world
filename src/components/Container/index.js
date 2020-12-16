@@ -91,6 +91,7 @@ const Container = ({ onSearch, searchValue="", queryResult=[], selectedResult={}
         <MenuItem value="0">DBPedia</MenuItem>
         <MenuItem value="1">Local</MenuItem>
         <MenuItem value="2">DBPedia + Local</MenuItem>
+        <MenuItem value="3">Local + Information from DBPedia</MenuItem>
       </Select>
       <SearchBar onSubmit={(value) => onSearch(value, type)} />
       {resultComponent}

@@ -27,6 +27,7 @@ const QueryResultList = ({ data, searchValue="", onSelect }) => {
   if (!searchValue) {
     return <Layout />;
   }
+  
   return (
     <Layout>
       <p>Showing results for <b>{searchValue}</b></p>
@@ -36,7 +37,7 @@ const QueryResultList = ({ data, searchValue="", onSelect }) => {
         <ResultLayout key={index} onClick={() => onSelect(index)}>
           {index+1}. Source: {result["source"]}
           <br/>
-          Data: {JSON.stringify(result)}
+          Name: {JSON.stringify(result.name)}
         </ResultLayout>
       ))}
     </Layout>

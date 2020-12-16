@@ -13,8 +13,25 @@ const addLiteralTriple = (subj, pred, obj) => {
 export const addDataToStore = (store, df) => {
   let query = "INSERT DATA { ";
 
+  const parseCountry = (country) => {
+    country = country.replace("N.", "Northern");
+    country = country.replace("Is.", "Island");
+    country = country.replace("Dem.", "Democratics");
+    country = country.replace("Rep.", "Republics");
+    country = country.replace("Repub.", "Republics");
+    country = country.replace("&", "and");
+    country = country.replace("Fed.", "Federated");
+    country = country.replace("St.", "States");
+
+    country = country.split(", ").length === 2 ? country.split(", ")[1]  + " " + country.split(", ")[0] : country;
+
+    return country;
+  };
+
   for(const [row] of df.iterrows()) {
-    query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "name", row.get("Country"), "string");
+    const country = parseCountry(row.get("Country"));
+
+    query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "name", country, "string");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "inRegion", row.get("Region"), "string");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "population", row.get("Population"), "long");
     query += addLiteralTriple(row.get("Country").replace(/\s/g,"_").replace(/[^_a-zA-Z0-9]/g,"-").toLowerCase(), "areaInSquareMile", row.get("Area (sq. mi.)"), "long");

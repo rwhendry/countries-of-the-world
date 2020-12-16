@@ -32,7 +32,6 @@ export const getCountryFromDbpedia = (value) => (`
     FILTER (REGEX(str(?name), "${value}", "i"))
     FILTER NOT EXISTS { ?country dbo:dissolutionYear ?yearEnd }
   }
-  LIMIT 10
 `);
 
 export const getCountryFromLocalStore = value => (`
@@ -53,8 +52,7 @@ export const getCountryFromLocalStore = value => (`
              SAM:service ?serviceIncomeRatio .
 
     FILTER (
-      REGEX(str(?name), "${value}", "i") ||
-      REGEX(str(?region), "${value}", "i")
+      REGEX(str(?name), "${value}", "i")
     )
   }
 `);
