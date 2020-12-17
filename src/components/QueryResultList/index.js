@@ -50,6 +50,7 @@ const Layout = styled.div`
     margin-top: 0.5em;
     height: 65vh;
     padding: 0;
+    font-size: 0.75em;
   }
 `;
 
