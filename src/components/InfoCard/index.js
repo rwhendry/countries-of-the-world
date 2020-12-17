@@ -3,6 +3,57 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { MOBILE_BREAK_POINT } from "constants/mobileBreakPoint";
 import Button from "components/Button";
+import sentenceCase from "utils/sentenceCase";
+
+
+const InfoCard = ({ data, onToggle, isMobile }) => {
+  const { additionalInformation } = data;
+
+  return (
+    <Layout>
+      {isMobile && (
+        <div>
+          <Button onClick={onToggle}>
+            Back to results
+          </Button>
+        </div>
+      )}
+      <ContentLayout>
+        <h1>{data.name}<hr/></h1>
+        <Table style={{ marginBottom: "3em"}}>
+          {Object.keys(data).map((key, index) => (
+            key !== "additionalInformation" &&
+            <TableRow key={index}>
+              <TableHead>{sentenceCase(key)}</TableHead>
+              <TableCell>{data[key]}</TableCell>
+            </TableRow>
+          ))}
+        </Table>
+
+        {additionalInformation && (
+          <>
+            <strong>Additional Information on {additionalInformation.name}<hr/></strong>
+            <Table>
+              {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
+                <TableRow key={index}>
+                  <TableHead>{sentenceCase(key)}</TableHead>
+                  <TableCell>{additionalInformation[key]}</TableCell>
+                </TableRow>
+              ))
+              }
+            </Table>
+          </>
+        )}
+      </ContentLayout>
+    </Layout>
+  );
+};
+
+InfoCard.propTypes = {
+  data: PropTypes.shape(),
+  onToggle: PropTypes.func,
+  isMobile: PropTypes.bool
+};
 
 const Layout = styled.div`
   width: 30%;
@@ -13,14 +64,14 @@ const Layout = styled.div`
   padding: 2em;
   margin-top: 2em;
   margin-right: 2em;
-  word-wrap: break-word;
-  position: sticky;
-  top: 4em;
+  overflow-y: scroll;
+  max-height: 55vh;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     width: 80vw;
     border: none;
     margin-top: 0.5em;
+    font-size: 0.75em;
   }
 `;
 
@@ -42,67 +93,13 @@ const TableHead = styled.th`
 const TableCell = styled.td`
   text-align: left;
   padding: 8px;
+  word-break: break-word;
 `;
 
 const TableRow = styled.tr`
   :nth-child(even) {
-    background-color: lavender;
+    background-color: whitesmoke;
   }
 `;
-
-const InfoCard = ({ data, onToggle, isMobile }) => {
-  const { additionalInformation } = data;
-
-  return (
-    <Layout>
-      {isMobile && (
-        <div>
-          <Button onClick={onToggle}>
-            Back to results
-          </Button>
-        </div>
-      )}
-      <ContentLayout>
-        <h1>{data.name}<hr/></h1>
-        <Table>
-          {Object.keys(data).map((key, index) => (
-            key !== "additionalInformation" &&
-            <TableRow key={index}>
-              <TableHead>{key.replace(/^./, key[0].toUpperCase())}</TableHead>
-              <TableCell>{data[key]}</TableCell>
-            </TableRow>
-          ))}
-        </Table>
-
-        <br/>
-        <br/>
-
-        {additionalInformation && (
-          <div> Additional Information on {additionalInformation.name} <hr/> </div>
-        )}
-
-        {/* <br/>
-        <br/> */}
-
-        <Table>
-          {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
-            <TableRow key={index}>
-              <TableHead>{key.replace(/^./, key[0].toUpperCase())}</TableHead>
-              <TableCell>{additionalInformation[key]}</TableCell>
-            </TableRow>
-          ))
-          }
-        </Table>
-
-      </ContentLayout>
-    </Layout>
-  );
-};
-
-InfoCard.propTypes = {
-  data: PropTypes.shape(),
-  onToggle: PropTypes.func,
-  isMobile: PropTypes.bool
-};
 
 export default InfoCard;
