@@ -24,7 +24,7 @@ const ResultLayout = styled.div`
 
   :nth-child(even) {
     border-radius: 1em;
-    background-color: #dddddd;
+    background-color: lavender;
   }
 `;
 

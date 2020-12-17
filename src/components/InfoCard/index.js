@@ -46,7 +46,7 @@ const TableCell = styled.td`
 
 const TableRow = styled.tr`
   :nth-child(even) {
-    background-color: #dddddd;
+    background-color: lavender;
   }
 `;
 
