@@ -48,17 +48,19 @@ const Layout = styled.div`
     width: 80vw;
     border: none;
     margin-top: 0.5em;
+    max-height: 65vh;
+    padding: 0;
   }
 `;
 
 const ResultLayout = styled.div`
   cursor: pointer;
-  padding: 1em 2em;
+  padding: 0.5em 2em 0.5em 1.5em;
   display: flex;
   flex-direction: row;
 
   :nth-child(even) {
-    border-radius: 1em;
+    border-radius: 0.75em;
     background-color: whitesmoke;
   }
 `;

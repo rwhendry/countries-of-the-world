@@ -17,11 +17,7 @@ const ContentLayout = styled.div`
   align-items: center;
   flex-grow: 1;
   width: 100%;
-  padding: 2em 0;
-
-  @media (max-width: ${MOBILE_BREAK_POINT}px) {
-    padding: 0.25em 0;
-  }
+  padding: 0.2em 0;
 `;
 
 const ResultLayout = styled.div`
@@ -35,6 +31,7 @@ const ResultLayout = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1em;
+    flex-grow: 0;
   }
 `;
 

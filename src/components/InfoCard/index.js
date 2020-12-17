@@ -63,15 +63,15 @@ const Layout = styled.div`
   border-radius: 1em;
   padding: 2em;
   margin-top: 2em;
-  margin-right: 2em;
   overflow-y: scroll;
   max-height: 55vh;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
-    width: 80vw;
+    width: 90vw;
     border: none;
     margin-top: 0.5em;
     font-size: 0.75em;
+    max-height: 65vh;
   }
 `;
 
