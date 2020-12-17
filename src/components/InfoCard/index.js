@@ -106,6 +106,7 @@ const TableKey = styled.td`
   vertical-align: top;
   text-align: left;
   padding: 8px;
+  font-weight: bold;
 `;
 
 const TableCell = styled.td`
