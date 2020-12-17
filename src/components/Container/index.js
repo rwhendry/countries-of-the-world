@@ -17,6 +17,11 @@ const ContentLayout = styled.div`
   align-items: center;
   flex-grow: 1;
   width: 100%;
+  padding: 2em 0;
+
+  @media (max-width: ${MOBILE_BREAK_POINT}px) {
+    padding: 0.25em 0;
+  }
 `;
 
 const ResultLayout = styled.div`
@@ -29,6 +34,7 @@ const ResultLayout = styled.div`
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     justify-content: center;
     align-items: center;
+    font-size: 1em;
   }
 `;
 
@@ -53,7 +59,7 @@ const Container = ({ onSearch, searchValue="", queryResult=[], selectedResult={}
   let resultComponent;
   if (!searchValue) {
     resultComponent = (
-      <ResultLayout style={{ alignItems: "center", fontSize: "1.25em", paddingBottom: "4em", color: "grey"}}>
+      <ResultLayout style={{ alignItems: "center", paddingBottom: "4em", color: "grey"}}>
         Start searching to explore the world
       </ResultLayout>
     );
