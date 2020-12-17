@@ -6,8 +6,22 @@ import Button from "components/Button";
 import sentenceCase from "utils/sentenceCase";
 
 
+const dataIsEmpty = (data) => {
+  for(var i in data) return false;
+  return true;
+};
+
 const InfoCard = ({ data, onToggle, isMobile }) => {
   const { additionalInformation } = data;
+
+  if (dataIsEmpty(data)) {
+    return (
+      <Layout>
+        <h1>Country<hr/></h1>
+        Select the country you wish to explore
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -21,26 +35,30 @@ const InfoCard = ({ data, onToggle, isMobile }) => {
       <ContentLayout>
         <h1>{data.name}<hr/></h1>
         <Table style={{ marginBottom: "3em"}}>
-          {Object.keys(data).map((key, index) => (
-            key !== "additionalInformation" &&
+          <tbody>
+            {Object.keys(data).map((key, index) => (
+              key !== "additionalInformation" &&
             <TableRow key={index}>
-              <TableHead>{sentenceCase(key)}</TableHead>
+              <TableKey>{sentenceCase(key)}</TableKey>
               <TableCell>{data[key]}</TableCell>
             </TableRow>
-          ))}
+            ))}
+          </tbody>
         </Table>
 
         {additionalInformation && (
           <>
             <strong>Additional Information on {additionalInformation.name}<hr/></strong>
             <Table>
-              {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
-                <TableRow key={index}>
-                  <TableHead>{sentenceCase(key)}</TableHead>
-                  <TableCell>{additionalInformation[key]}</TableCell>
-                </TableRow>
-              ))
-              }
+              <tbody>
+                {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
+                  <TableRow key={index}>
+                    <TableKey>{sentenceCase(key)}</TableKey>
+                    <TableCell>{additionalInformation[key]}</TableCell>
+                  </TableRow>
+                ))
+                }
+              </tbody>
             </Table>
           </>
         )}
@@ -64,14 +82,14 @@ const Layout = styled.div`
   padding: 2em;
   margin-top: 2em;
   overflow-y: scroll;
-  max-height: 55vh;
+  height: 55vh;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     width: 90vw;
     border: none;
     margin-top: 0.5em;
     font-size: 0.75em;
-    max-height: 65vh;
+    height: 65vh;
   }
 `;
 
@@ -84,7 +102,7 @@ const Table = styled.table`
   border-collapse: collapse;
 `;
 
-const TableHead = styled.th`
+const TableKey = styled.td`
   vertical-align: top;
   text-align: left;
   padding: 8px;

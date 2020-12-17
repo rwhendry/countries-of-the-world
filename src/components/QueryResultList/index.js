@@ -20,8 +20,8 @@ const QueryResultList = ({ data, searchValue="", onSelect }) => {
         <ResultLayout key={index} onClick={() => onSelect(index)}>
           <Numbering>{index+1}</Numbering>
           <ResultItemLayout>
-            <span style={{ fontSize: "0.65em"}}>{result.source}</span><br/>
-            {result.name}
+            <span style={{ fontSize: "0.55em"}}>{result.source}</span><br/>
+            <span>{result.name}</span>
           </ResultItemLayout>
         </ResultLayout>
       ))}
@@ -42,13 +42,13 @@ const Layout = styled.div`
   padding: 2em;
   margin: 2em;
   overflow-y: scroll;
-  max-height: 55vh;
+  height: 55vh;
 
   @media (max-width: ${MOBILE_BREAK_POINT}px) {
     width: 80vw;
     border: none;
     margin-top: 0.5em;
-    max-height: 65vh;
+    height: 65vh;
     padding: 0;
   }
 `;

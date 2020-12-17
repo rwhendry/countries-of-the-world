@@ -31,7 +31,6 @@ const ResultLayout = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1em;
-    flex-grow: 0;
   }
 `;
 
