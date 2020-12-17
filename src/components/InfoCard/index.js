@@ -68,7 +68,7 @@ const InfoCard = ({ data, onToggle, isMobile }) => {
           {Object.keys(data).map((key, index) => (
             key !== "additionalInformation" &&
             <TableRow key={index}>
-              <TableHead>{key}</TableHead>
+              <TableHead>{key.replace(/^./, key[0].toUpperCase())}</TableHead>
               <TableCell>{data[key]}</TableCell>
             </TableRow>
           ))}
@@ -78,7 +78,7 @@ const InfoCard = ({ data, onToggle, isMobile }) => {
         <br/>
 
         {additionalInformation && (
-          <div> Additional Information: {additionalInformation.name} <hr/> </div>
+          <div> Additional Information on {additionalInformation.name} <hr/> </div>
         )}
 
         {/* <br/>
@@ -87,7 +87,7 @@ const InfoCard = ({ data, onToggle, isMobile }) => {
         <Table>
           {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
             <TableRow key={index}>
-              <TableHead>{key}</TableHead>
+              <TableHead>{key.replace(/^./, key[0].toUpperCase())}</TableHead>
               <TableCell>{additionalInformation[key]}</TableCell>
             </TableRow>
           ))
