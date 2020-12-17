@@ -19,25 +19,32 @@ const Layout = styled.div`
 
 const ResultLayout = styled.div`
   cursor: pointer;
-  margin: 2em 0;
+  padding: 1em 2em;
   word-wrap: break-word;
+
+  :nth-child(even) {
+    border-radius: 1em;
+    background-color: #dddddd;
+  }
 `;
 
 const QueryResultList = ({ data, searchValue="", onSelect }) => {
   if (!searchValue) {
     return <Layout />;
   }
-  
+
   return (
     <Layout>
       <p>Showing results for <b>{searchValue}</b></p>
       {data.length} {data.length > 1 ? "entries" : "entry"} match your query:
 
+      <hr/>
+
       {data.map((result, index) => (
         <ResultLayout key={index} onClick={() => onSelect(index)}>
           {index+1}. Source: {result["source"]}
           <br/>
-          Name: {JSON.stringify(result.name)}
+          Name: {result.name}
         </ResultLayout>
       ))}
     </Layout>

@@ -28,6 +28,28 @@ const ContentLayout = styled.div`
   margin: 1em 0;
 `;
 
+const Table = styled.table`
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+`;
+
+const TableHead = styled.th`
+  vertical-align: top;
+  text-align: left;
+  padding: 8px;
+`;
+
+const TableCell = styled.td`
+  text-align: left;
+  padding: 8px;
+`;
+
+const TableRow = styled.tr`
+  :nth-child(even) {
+    background-color: #dddddd;
+  }
+`;
+
 const InfoCard = ({ data, onToggle, isMobile }) => {
   const { additionalInformation } = data;
 
@@ -41,22 +63,36 @@ const InfoCard = ({ data, onToggle, isMobile }) => {
         </div>
       )}
       <ContentLayout>
-        {Object.keys(data).map((key, index) => (
-          key !== "additionalInformation" && <div key={index}>{key}: {JSON.stringify(data[key])}</div>
-        ))}
+        <h1>{data.name}<hr/></h1>
+        <Table>
+          {Object.keys(data).map((key, index) => (
+            key !== "additionalInformation" &&
+            <TableRow key={index}>
+              <TableHead>{key}</TableHead>
+              <TableCell>{data[key]}</TableCell>
+            </TableRow>
+          ))}
+        </Table>
 
         <br/>
         <br/>
 
         {additionalInformation && (
-          <div> Additional Information: {additionalInformation.name} </div>
+          <div> Additional Information: {additionalInformation.name} <hr/> </div>
         )}
 
-        <br/>
-        <br/>
-        {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
-          <div key={index}>{key}: {JSON.stringify(additionalInformation[key])}</div>))
-        }
+        {/* <br/>
+        <br/> */}
+
+        <Table>
+          {additionalInformation && Object.keys(additionalInformation).map((key, index) => (
+            <TableRow key={index}>
+              <TableHead>{key}</TableHead>
+              <TableCell>{additionalInformation[key]}</TableCell>
+            </TableRow>
+          ))
+          }
+        </Table>
 
       </ContentLayout>
     </Layout>
