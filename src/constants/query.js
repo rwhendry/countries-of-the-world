@@ -1,38 +1,48 @@
 export const getCountryFromDbpedia = (value) => (`
   PREFIX dbo: <http://dbpedia.org/ontology/>
-  PREFIX dbr: <http://dbpedia.org/resource/>
+  PREFIX dbp: <http://dbpedia.org/property/>
+  PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
   SELECT DISTINCT
     ?name
     ?country
-    (MAX(?foundingDate) as ?foundingDate)
+    (SAMPLE(?foundingDate) as ?foundingDate)
     (SAMPLE(?leader) as ?leader)
     (SAMPLE(?capital) as ?capital)
     (SAMPLE(?currency) as ?currency)
     ?abstract
   WHERE {
     ?country a dbo:Country ;
-             rdfs:label ?name ;
-             dbo:capital ?capitalObject ;
-             dbo:abstract ?abstract ;
-             dbo:leader ?leaderObject .
-    
+      dbo:abstract ?abstract ;
+      rdfs:label ?name ;
+      dbo:capital ?capitalObject .
+
     ?capitalObject foaf:name ?capital .
-    ?leaderObject foaf:name ?leader .
 
     OPTIONAL {
-      ?country dbo:currency ?currencyObject ;
-               dbo:foundingDate ?foundingDate .
-
-      ?currencyObject foaf:name ?currency .
+      ?country dbo:leaderFunction ?leaderObject .
+      ?leaderObject dbo:person ?leaderPerson .
+      ?leaderPerson foaf:name ?leader .
     }
+    OPTIONAL {
+      ?country dbo:currency ?currencyObject .
+      ?currencyObject rdfs:label ?currency .
+    }
+    OPTIONAL { ?country dbp:establishedDate ?foundingDate }
 
     FILTER (LANG(?name)="en")
+    FILTER (DATATYPE(?foundingDate)=xsd:date)
+    FILTER (LANG(?leader)="en")
+    FILTER (LANG(?capital)="en")
+    FILTER (LANG(?currency)="en")
     FILTER (LANG(?abstract)="en")
     FILTER (REGEX(str(?name), "${value}", "i"))
     FILTER NOT EXISTS { ?country dbo:dissolutionYear ?yearEnd }
   }
 `);
+
 
 export const getCountryFromLocalStore = value => (`
   PREFIX SAM: <http://www.samkok.cn/resource/>
