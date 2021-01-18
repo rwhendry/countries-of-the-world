@@ -57,7 +57,7 @@ const App = () => {
               }
             });
 
-            if (levenshtein(a.name , word.name) <= (a.name.length // 3)) {
+            if (levenshtein(a.name , word.name) <= (Math.min(a.name.length, word.name.length) // 3)) {
               a.additionalInformation = word;
             }
  
