@@ -57,7 +57,10 @@ const App = () => {
               }
             });
 
-            a.additionalInformation = word;
+            if (levenshtein(a.name , word.name) <= (a.name.length // 3)) {
+              a.additionalInformation = word;
+            }
+ 
             return a;
           }));
         }
